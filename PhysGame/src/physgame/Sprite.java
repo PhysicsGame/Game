@@ -7,7 +7,7 @@ public class Sprite {
     public static Sprite pullObj    = new Sprite(26, 16, 0, 1, SpriteSheet.objectSheet, 6);
     public static Sprite gameObj    = new Sprite(16, 0, 0, SpriteSheet.obj, 1);
     
-    
+    private int updateTime = 0;
     public final int W, H;
     private int xInSheet, yInSheet,//coords of sprite in sprite sheet
             frame = 0;
@@ -18,6 +18,7 @@ public class Sprite {
     private int animationSpeed = 1;
     
     public Sprite(int width, int height, int x, int y, SpriteSheet ss, int frames){
+        updateTime = (int)(85 + Math.random() * 80);
         W = width;
         H = height;
         this.xInSheet = x * width;
@@ -137,7 +138,7 @@ public class Sprite {
     private int updates = 0;
     
     public void update(){
-        if(++updates % (int)(45 + Math.random() * 10)  == 0){
+        if(++updates % updateTime  == 0){
             updates = 0;
             if(++frame == MAX_FRAMES)
                 frame = 0;

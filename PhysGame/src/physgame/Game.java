@@ -21,7 +21,7 @@ public class Game extends Canvas implements Runnable {
     private long lastUpdate = System.currentTimeMillis();
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private SpriteSheet ss;
-    private GameObject[] normalSphere = new GameObject[15];
+    private GameObject[] normalSphere = new GameObject[30];
     private GameObject center;
     private GameSphere playerSphere;
 
@@ -34,7 +34,7 @@ public class Game extends Canvas implements Runnable {
             double tempMass = Math.random() * 12 - 6;
             while(tempMass == 0)
                 tempMass = Math.random() * 12 - 6;
-            normalSphere[i] = new GameObject(Math.random() * 200, Math.random() * 240, 0, 0, tempMass, true, screen);
+            normalSphere[i] = new GameObject(Math.random() * (screen.width - 26), Math.random() * (screen.height - 32), 0, 0, tempMass, true, screen);
             mc += normalSphere[i].getMass();
             xc += normalSphere[i].getPosition()[0] * normalSphere[i].getMass();
             yc += normalSphere[i].getPosition()[1] * normalSphere[i].getMass();
@@ -139,11 +139,11 @@ public class Game extends Canvas implements Runnable {
 
         double[] vel = playerSphere.getVelocity();
         double mag = Math.sqrt(vel[0] * vel[0] + vel[1] * vel[1]);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println("V: " + mag);
-        System.out.println("X: " + forces[0]);
-        System.out.println("Y: " + forces[1]);
-        System.out.println("G: " + playerSphere.getG());
+//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+//        System.out.println("V: " + mag);
+//        System.out.println("X: " + forces[0]);
+//        System.out.println("Y: " + forces[1]);
+//        System.out.println("G: " + playerSphere.getG());
         playerSphere.updatePosition(startTime - lastUpdate);
         playerSphere.updateVelocity(startTime - lastUpdate);
         lastUpdate = startTime;
