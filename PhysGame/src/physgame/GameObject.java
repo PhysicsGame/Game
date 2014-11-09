@@ -1,6 +1,6 @@
 // Basic game object, whether it's a positive or negative gravity object
 
-package physicsgame;
+package physgame;
 
 public class GameObject 
 {

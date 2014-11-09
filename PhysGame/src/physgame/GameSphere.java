@@ -1,4 +1,4 @@
-package physicsgame;
+package physgame;
 
 public class GameSphere extends GameObject
 {
