@@ -9,18 +9,22 @@ public class GameObject
     private double mass;
     private boolean isAttractive;
     private boolean isPassive;
+    private Sprite sprite = Sprite.gameObj;
+    private Screen screen;
     
-    GameObject()
+    GameObject(Screen s)
     {
         pos = new Vector2d(0,0);
         vel = new Vector2d(0,0);
         mass = 1;
         isPassive = true;
         isAttractive = false;
+        screen = s;
     }
     
-    GameObject(double x, double y, double dx, double dy, double m, boolean active)
+    GameObject(double x, double y, double dx, double dy, double m, boolean active, Screen s)
     {
+        screen = s;
         pos = new Vector2d(x,y);
         vel = new Vector2d(dx,dy);
         mass = m;
@@ -40,8 +44,9 @@ public class GameObject
         }
      }
     
-    GameObject(Vector2d p, Vector2d v, double m)
+    GameObject(Vector2d p, Vector2d v, double m, Screen s)
     {
+        screen = s;
         pos = new Vector2d(p.getX(),p.getY());
         vel = new Vector2d(v.getX(),v.getY());
         mass = m;
@@ -85,6 +90,10 @@ public class GameObject
             return true;
         else
             return false;
+    }
+    
+    public void render(){
+        screen.render((int)pos.getX(),(int)pos.getY(),sprite);
     }
     
 }

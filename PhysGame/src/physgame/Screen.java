@@ -38,7 +38,7 @@ class Screen {
     public void render(int yp, int xp, Sprite s){
         for (int y = 0; y < s.H; y++) {
             int ya = y + yp;
-            for (int x = 0; x < s.H; x++) {
+            for (int x = 0; x < s.W; x++) {
                 int xa = x + xp;
                 if (xa < 0 || xa >= width || ya < 0 || ya >= height) {
                     break;

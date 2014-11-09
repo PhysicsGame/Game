@@ -18,13 +18,18 @@ public class Game extends Canvas implements Runnable{
     private JFrame frame = new JFrame();
     private boolean running = true;
     private Thread mThread;
+    private long lastUpdate = System.currentTimeMillis();
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private SpriteSheet ss;
+    private GameObject normalSphere;
+    private GameSphere playerSphere;
     
     /**
      *
      */
     public Game(){
+        normalSphere = new GameObject(25, 50, 0, 0, 15, true, screen);
+        playerSphere = new GameSphere(40, 250, 0, 0, screen);
         frame.setTitle("GAME SPHERES!");        
         frame.setPreferredSize(new Dimension(x*scale,y*scale));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,6 +106,8 @@ public class Game extends Canvas implements Runnable{
         g.fillRect(0, 0, x*scale, y*scale);
         screen.renderBackground();
         
+        playerSphere.render();
+        normalSphere.render();
         
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
         g.drawImage(image, 0,0, x * scale, y * scale, this);
@@ -110,6 +117,12 @@ public class Game extends Canvas implements Runnable{
     }
     
     public void update(){
+        long startTime = System.currentTimeMillis();
+        playerSphere.calculateForce(new GameObject[]{normalSphere});
+        playerSphere.updateVelocity(startTime - lastUpdate);
+        playerSphere.updatePosition(startTime - lastUpdate);
+        lastUpdate = startTime;
+        
         
     }
 }

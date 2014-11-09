@@ -18,7 +18,9 @@ public class SpriteSheet {
     private String path;
     public final int WIDTH, HEIGHT;
     public int[] pixels;
-    public static SpriteSheet backgroundSheet = new SpriteSheet("/Textures/Background.png");
+    
+    public static SpriteSheet backgroundSheet   = new SpriteSheet("/Textures/Background.png");
+    public static SpriteSheet objectSheet       = new SpriteSheet("/Textures/GameSphere.png");
 
     /**
      * This creates an instance of a SpriteSheet, taking the path data, size in

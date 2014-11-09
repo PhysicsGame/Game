@@ -7,14 +7,14 @@ public class GameSphere extends GameObject
     private double normalMass = 1;
     private double heading;
     
-    GameSphere(double x, double y, double dx, double dy)
+    GameSphere(double x, double y, double dx, double dy, Screen s)
     {
-        super(x, y, dx, dy, 1, true);
+        super(x, y, dx, dy, 1, true, s);
     }
     
-    GameSphere(Vector2d startPos, Vector2d startVel, double m)
+    GameSphere(Vector2d startPos, Vector2d startVel, double m, Screen s)
     {
-        super(startPos, startVel, m);
+        super(startPos, startVel, m, s);
     }
     
     double[] calculateForce(GameObject[] spheres)
@@ -117,5 +117,4 @@ public class GameSphere extends GameObject
     {
         return force;
     }
-    
 }
