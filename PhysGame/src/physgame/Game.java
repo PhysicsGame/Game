@@ -146,13 +146,23 @@ public class Game extends Canvas implements Runnable {
         
         if (scroll.notches < 0)
         {
-            currentMass += 1;
+            if (currentMass < 40)
+            {
+                currentMass += 1;
+                if (currentMass == 0)
+                    currentMass = 1;
+            }
             scroll.notches = 0;
         }
         else if (scroll.notches > 0)
         {
-            currentMass -= 1;
-            scroll.notches = 0;
+            if (currentMass > -40)
+            {
+                currentMass -= 1;
+                if (currentMass == 0)
+                    currentMass = -1;
+            }
+                scroll.notches = 0;
         }
         mouse.update();
         if (mouse.lastMouseClicked) {
