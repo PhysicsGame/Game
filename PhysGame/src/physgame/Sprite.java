@@ -3,8 +3,9 @@ package physgame;
 public class Sprite {
     
     public static Sprite background = new Sprite(250, 300, 0, 0, SpriteSheet.backgroundSheet, 1);
-    public static Sprite gameObj    = new Sprite(16, 0, 0, SpriteSheet.objectSheet, 1);
-    public static Sprite gameObj2    = new Sprite(8, 0, 0, SpriteSheet.objectSheet, 1);
+    public static Sprite pushObj    = new Sprite(26, 16, 0, 0, SpriteSheet.objectSheet, 6);
+    public static Sprite pullObj    = new Sprite(26, 16, 0, 1, SpriteSheet.objectSheet, 6);
+    public static Sprite gameObj    = new Sprite(16, 0, 0, SpriteSheet.obj, 1);
     
     
     public final int W, H;
@@ -17,7 +18,7 @@ public class Sprite {
     private int animationSpeed = 1;
     
     public Sprite(int width, int height, int x, int y, SpriteSheet ss, int frames){
-       W = width;
+        W = width;
         H = height;
         this.xInSheet = x * width;
         this.yInSheet = y * height;
@@ -87,7 +88,12 @@ public class Sprite {
     private void load() {
         for (int y = 0; y < H; y++) {
             for (int x = 0; x < W; x++) {
-                pixels[x + y * W] = sheet.pixels[(x + (frame * W) + this.xInSheet) + (this.yInSheet + y)*sheet.WIDTH]; // should frames be frames - 1? if changed, max frames constructor -1ing should change.
+                try{
+                pixels[x + y * W] = sheet.pixels[(x + (frame * W) + this.xInSheet) + (this.yInSheet + y)*sheet.WIDTH];}
+                catch(Exception e){
+                    System.out.println(SpriteSheet.getSheet(sheet));
+                    System.exit(0);
+                }
             }
         }
     }
@@ -126,5 +132,20 @@ public class Sprite {
                 pixels[(W - 1 - x) + y * W] = sheet.pixels[(x + (frame * W) + this.xInSheet) + (this.yInSheet + y)*sheet.WIDTH]; // should frames be frames - 1? if changed, max frames constructor -1ing should change.
             }
         }
+    }
+    
+    private int updates = 0;
+    
+    public void update(){
+        if(++updates % (int)(45 + Math.random() * 10)  == 0){
+            updates = 0;
+            if(++frame == MAX_FRAMES)
+                frame = 0;
+        }
+    }
+    
+    public void render(){
+        if(MAX_FRAMES > 0)
+            load();
     }
 }

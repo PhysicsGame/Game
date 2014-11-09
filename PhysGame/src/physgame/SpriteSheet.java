@@ -20,8 +20,8 @@ public class SpriteSheet {
     public int[] pixels;
     
     public static SpriteSheet backgroundSheet   = new SpriteSheet("/Textures/Background.png");
-    public static SpriteSheet objectSheet       = new SpriteSheet("/Textures/GameSphere.png");
-
+    public static SpriteSheet objectSheet       = new SpriteSheet("/Textures/GameSpheres.png");
+    public static SpriteSheet obj               = new SpriteSheet("/Textures/GameSphere.png");
     /**
      * This creates an instance of a SpriteSheet, taking the path data, size in
      * pixels, and creating a storage area for the pixels until loading at the
@@ -57,5 +57,16 @@ public class SpriteSheet {
             Logger.getLogger(SpriteSheet.class.getName()).log(Level.SEVERE, "Could not load SpriteSheet " + path, ex);
         }
         return 0;
+    }
+    
+    public static String getSheet(SpriteSheet ss){
+        if(ss == backgroundSheet)
+            return "BACKGROUND";
+        if(ss == objectSheet)
+            return "Floaters?";
+        if(ss == obj)
+            return "object";
+        
+        return "";
     }
 }

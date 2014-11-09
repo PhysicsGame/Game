@@ -28,7 +28,8 @@ public class GameObject
         pos = new Vector2d(x,y);
         vel = new Vector2d(dx,dy);
         mass = m;
-        
+        if(mass > 0) sprite = Sprite.pullObj;
+        if(mass < 0) sprite = Sprite.pushObj;
         if (active)
         {
             isPassive = false;
@@ -50,6 +51,9 @@ public class GameObject
         pos = new Vector2d(p.getX(),p.getY());
         vel = new Vector2d(v.getX(),v.getY());
         mass = m;
+        if(mass > 0) sprite = Sprite.pullObj;
+        if(mass < 0) sprite = Sprite.pushObj;
+        
     }
     
     double[] getPosition()
@@ -93,10 +97,15 @@ public class GameObject
     }
     
     public void render(){
+        sprite.render();
         screen.renderGameObj((int)pos.getX(),(int)pos.getY(), sprite.W/2, sprite);
     }
     
     public void setSprite(Sprite s){
         sprite = s;
+    }
+    
+    public void update(){
+        sprite.update();
     }
 }

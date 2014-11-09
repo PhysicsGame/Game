@@ -10,11 +10,13 @@ public class GameSphere extends GameObject
     GameSphere(double x, double y, double dx, double dy, Screen s)
     {
         super(x, y, dx, dy, 1, true, s);
+        sprite = Sprite.gameObj;
     }
     
     GameSphere(Vector2d startPos, Vector2d startVel, double m, Screen s)
     {
         super(startPos, startVel, m, s);
+        sprite = Sprite.gameObj;
     }
     
     double[] calculateForce(GameObject[] spheres)
@@ -120,6 +122,7 @@ public class GameSphere extends GameObject
     }
     
     public void update(){
+        super.update();
         if(getPosition()[0] < 0 && getVelocity()[0] < 0){
             vel.setX(-vel.getX() * .8);
         }
