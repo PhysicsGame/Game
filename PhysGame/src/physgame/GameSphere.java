@@ -5,6 +5,7 @@ public class GameSphere extends GameObject
     private double G_ = .0000000000667;
     private Vector2d force = new Vector2d();
     private double normalMass = 1;
+    private double heading;
     
     GameSphere(double x, double y, double dx, double dy)
     {
@@ -89,6 +90,15 @@ public class GameSphere extends GameObject
         
         dx = getVelocity()[0] + (force.getX()/getMass())*t;
         dy = getVelocity()[1] + (force.getY()/getMass())*t;
+        
+        heading = Math.abs(Math.atan(dy/dx));
+        
+        if (dx < 0 && dy > 0)
+            heading += 90;
+        else if (dx < 0 && dy < 0)
+            heading += 180;
+        else if (dx > 0 && dy < 0)
+            heading += 270;
         
         setVelocity(dx, dy);
     }
