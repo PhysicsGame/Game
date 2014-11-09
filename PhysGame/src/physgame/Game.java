@@ -21,15 +21,15 @@ public class Game extends Canvas implements Runnable{
     private long lastUpdate = System.currentTimeMillis();
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private SpriteSheet ss;
-    private GameObject normalSphere;
+    private GameObject[] normalSphere = new GameObject[10];
     private GameSphere playerSphere;
     
     /**
      *
      */
     public Game(){
-//        normalSphere = new GameObject(25, 50, 0, 0, 15, true, screen);
-        normalSphere = new GameObject(40, 250, 0, 0, 15, true, screen);
+        for(int i = 0; i < normalSphere.length; i++)
+            normalSphere[i] = new GameObject(Math.random() * 200, Math.random() * 240, 0, 0, Math.random() * 12 + 3, true, screen);
         playerSphere = new GameSphere(25, 50, 0, 0, screen);
         frame.setTitle("GAME SPHERES!");        
         frame.setPreferredSize(new Dimension(x*scale,y*scale));
@@ -108,7 +108,8 @@ public class Game extends Canvas implements Runnable{
         screen.renderBackground();
         
         playerSphere.render();
-        normalSphere.render();
+        for(GameObject gs : normalSphere)
+            gs.render();
         
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
         g.drawImage(image, 0,0, x * scale, y * scale, this);
@@ -119,12 +120,16 @@ public class Game extends Canvas implements Runnable{
     
     public void update(){
         long startTime = System.currentTimeMillis();
-        double[] forces = playerSphere.calculateForce(new GameObject[]{normalSphere});
+        double[] forces = playerSphere.calculateForce(normalSphere);
+        
+        double[] vel = playerSphere.getVelocity();
+        double mag = Math.sqrt(vel[0] * vel[0] + vel[1] * vel[1]);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("V: " + mag);
         System.out.println("X: " +forces[0]);
         System.out.println("Y: " + forces[1]);
-        playerSphere.updateVelocity(startTime - lastUpdate);
         playerSphere.updatePosition(startTime - lastUpdate);
+        playerSphere.updateVelocity(startTime - lastUpdate);
         lastUpdate = startTime;
         
         
