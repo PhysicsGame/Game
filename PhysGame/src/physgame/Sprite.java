@@ -5,7 +5,7 @@ public class Sprite {
     public static Sprite background = new Sprite(250, 300, 0, 0, SpriteSheet.backgroundSheet, 1);
     public static Sprite pushObj    = new Sprite(26, 16, 0, 0, SpriteSheet.objectSheet, 6);
     public static Sprite pullObj    = new Sprite(26, 16, 0, 1, SpriteSheet.objectSheet, 6);
-    public static Sprite gameObj    = new Sprite(13, 16, 0, 0,  SpriteSheet.obj, 7);
+    public static Sprite gameObj    = new Sprite(12, 16, 0, 0,  SpriteSheet.obj, 7);
     
     private int updateTime = 0;
     public final int W, H;
@@ -18,7 +18,7 @@ public class Sprite {
     private int animationSpeed = 1;
     
     public Sprite(int width, int height, int x, int y, SpriteSheet ss, int frames){
-        updateTime = (int)(85 + Math.random() * 80);
+        updateTime = (int)(25);
         W = width;
         H = height;
         this.xInSheet = x * width;
