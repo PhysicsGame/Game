@@ -2,7 +2,7 @@ package physgame;
 
 public class GameSphere extends GameObject
 {
-    private double G_ = .0000000000667;
+    private double G_ = .00667;
     private Vector2d force = new Vector2d();
     private double normalMass = 1;
     private double heading;

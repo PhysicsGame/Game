@@ -35,7 +35,8 @@ class Screen {
         }
     }
     
-    public void render(int yp, int xp, Sprite s){
+    public void renderGameObj(int xp, int yp, int size, Sprite s){
+        
         for (int y = 0; y < s.H; y++) {
             int ya = y + yp;
             for (int x = 0; x < s.W; x++) {
@@ -46,7 +47,8 @@ class Screen {
                 if (xa < 0) {
                     xa = 0;
                 }
-                pixels[xa + (ya * width)] = s.pixels[x + (y * width)];
+                if(s.pixels[x + (y * s.W)] != 0xffff00ff)
+                    pixels[xa + (ya * width)] = s.pixels[x + (y * s.W)];
             }
         }
     }

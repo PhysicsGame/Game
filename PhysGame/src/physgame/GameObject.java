@@ -93,7 +93,7 @@ public class GameObject
     }
     
     public void render(){
-        screen.render((int)pos.getX(),(int)pos.getY(),sprite);
+        screen.renderGameObj((int)pos.getX(),(int)pos.getY(), sprite.W/2, sprite);
     }
     
 }

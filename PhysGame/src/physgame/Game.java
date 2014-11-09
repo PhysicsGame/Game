@@ -28,8 +28,9 @@ public class Game extends Canvas implements Runnable{
      *
      */
     public Game(){
-        normalSphere = new GameObject(25, 50, 0, 0, 15, true, screen);
-        playerSphere = new GameSphere(40, 250, 0, 0, screen);
+//        normalSphere = new GameObject(25, 50, 0, 0, 15, true, screen);
+        normalSphere = new GameObject(40, 250, 0, 0, 15, true, screen);
+        playerSphere = new GameSphere(25, 50, 0, 0, screen);
         frame.setTitle("GAME SPHERES!");        
         frame.setPreferredSize(new Dimension(x*scale,y*scale));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -118,7 +119,10 @@ public class Game extends Canvas implements Runnable{
     
     public void update(){
         long startTime = System.currentTimeMillis();
-        playerSphere.calculateForce(new GameObject[]{normalSphere});
+        double[] forces = playerSphere.calculateForce(new GameObject[]{normalSphere});
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("X: " +forces[0]);
+        System.out.println("Y: " + forces[1]);
         playerSphere.updateVelocity(startTime - lastUpdate);
         playerSphere.updatePosition(startTime - lastUpdate);
         lastUpdate = startTime;
