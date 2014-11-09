@@ -10,7 +10,7 @@ public class GameObject
     private boolean isAttractive;
     private boolean isPassive;
     protected Sprite sprite = Sprite.gameObj;
-    protected Screen screen;
+    private Screen screen;
     
     GameObject(Screen s)
     {
@@ -98,7 +98,8 @@ public class GameObject
     
     public void render(){
         sprite.render();
-        screen.renderGameObj((int)pos.getX(),(int)pos.getY(), sprite.W/2, sprite);
+        if(screen != null)
+            screen.renderGameObj((int)pos.getX(),(int)pos.getY(), sprite);
     }
     
     public void setSprite(Sprite s){

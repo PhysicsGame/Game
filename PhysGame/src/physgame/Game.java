@@ -15,7 +15,7 @@ public class Game extends Canvas implements Runnable {
     
     private int y = 300, x = 250;
     private Screen screen = new Screen(x, y);
-    private int scale = 2;
+    public static int scale = 2;
     private Mouse mouse;
     private Keyboard key;
     private MouseWheel scroll;
@@ -28,33 +28,20 @@ public class Game extends Canvas implements Runnable {
     private SpriteSheet ss;
     private ArrayList<GameObject> normalSphere = new ArrayList<GameObject>();
     private double currentMass = 10;
-    private GameObject center;
     private GameObject goal;
     private GameSphere playerSphere;
     private boolean canStart = false;
-    private Level lvl1 = new Level("No, please", screen);
+    private Level lvl1;
 
     /**
      *
      */
     public Game() {
-//        double mc=0, xc=0, yc=0;
-//        for (int i = 0; i < normalSphere.length; i++) {
-//            double tempMass = Math.random() * 12 - 6;
-//            while(tempMass == 0)
-//                tempMass = Math.random() * 12 - 6;
-//            normalSphere[i] = new GameObject(Math.random() * (screen.width - 26), Math.random() * (screen.height - 32), 0, 0, tempMass, true, screen);
-//            mc += normalSphere[i].getMass();
-//            xc += normalSphere[i].getPosition()[0] * normalSphere[i].getMass();
-//            yc += normalSphere[i].getPosition()[1] * normalSphere[i].getMass();
-//        }
-//        
-//        center = new GameObject(xc/mc, yc/mc, 0,0,mc,true,screen);
-//        center.setSprite(Sprite.gameObj);
+        lvl1  = new Level("/Textures/Levels/Level 1.png", screen);
         
         goal = new GameObject(118, 5, 0, 0, 0, true, screen);
         goal.setSprite(Sprite.goal);
-        playerSphere = new GameSphere(118, 260, 0, 0, screen);
+        playerSphere = new GameSphere(118, 230, 0, 0, screen);
         frame.setTitle("GAME SPHERES!");
         frame.setPreferredSize(new Dimension(x * scale, y * scale));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -133,15 +120,16 @@ public class Game extends Canvas implements Runnable {
         
         g.fillRect(0, 0, x * scale, y * scale);
         screen.renderBackground();
+        lvl1.render();
         if (!normalSphere.isEmpty()) {
             for (GameObject gs : normalSphere) {
-                gs.render();
+                if(gs != null)
+                    gs.render();
             }
         }
         
         goal.render();
         playerSphere.render();
-        lvl1.render();
         
 //        center.render();
 
@@ -199,18 +187,22 @@ public class Game extends Canvas implements Runnable {
 //        System.out.println("G: " + playerSphere.getG());
 //        System.out.println(scroll.notches);
         System.out.println(currentMass);
+        
         playerSphere.updatePosition(startTime - lastUpdate);
         playerSphere.updateVelocity(startTime - lastUpdate);
+        lvl1.update();
+        if(lvl1.collide(playerSphere))
+            playerSphere.setVelocity(-playerSphere.getVelocity()[0], -playerSphere.getVelocity()[1]);
         lastUpdate = startTime;
         }
         playerSphere.update();
         if (!normalSphere.isEmpty()) {
             for (GameObject objs : normalSphere) {
-                objs.update();
+                if(objs != null)
+                    objs.update();
             }
         }
         key.update();
-        lvl1.update();
         
         
     }

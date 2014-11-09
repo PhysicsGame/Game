@@ -29,6 +29,7 @@ public class GameSphere extends GameObject
         double distanceY;
         for (GameObject g : spheres)
                 {
+                    if(g == null) continue;
                     distanceX = Math.abs(g.getPosition()[0]-this.getPosition()[0]);
                     distanceY = Math.abs(g.getPosition()[1]-this.getPosition()[1]);
                     
@@ -136,13 +137,10 @@ public class GameSphere extends GameObject
         if(getPosition()[0] < 0 && getVelocity()[0] < 0){
             vel.setX(-vel.getX() * .8);
         }
-        if(getPosition()[0] + sprite.W > screen.width && getVelocity()[0] > 0){
+        if(getPosition()[0] + sprite.W > Game.WIDTH/Game.scale && getVelocity()[0] > 0){
             vel.setX(-vel.getX() * .8);
         }
-        if(getPosition()[1] < 0 && getVelocity()[1] < 0){
-            vel.setY(-vel.getY() * .8);
-        }
-        if(getPosition()[1] + sprite.H + 14 > screen.height && getVelocity()[1] > 0){
+        if(getPosition()[1] < 0 && getVelocity()[1] < 0 || getPosition()[1] + sprite.H + 14 > Game.HEIGHT/Game.scale && getVelocity()[1] > 0){
             vel.setY(-vel.getY() * .8);
         }
     }

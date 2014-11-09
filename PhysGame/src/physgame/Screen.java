@@ -8,10 +8,6 @@ package physgame;
 class Screen {
     public int width, height; //of screen
     public int[] pixels;
-    public int mapwidth = 64; //image file should be 64 px by 64 px
-    private int mapsize = mapwidth * mapwidth;
-    public int[] tiles = new int[mapsize]; //64 tiles in both directions
-    public static int xOffs, yOffs; //position to look at    
 
     public Screen(int x, int y){
         width = x;
@@ -35,8 +31,8 @@ class Screen {
         }
     }
     
-    public void renderGameObj(int xp, int yp, int size, Sprite s){
-        
+    public void renderGameObj(int xp, int yp, Sprite s){
+        if(s == null) return;
         for (int y = 0; y < s.H; y++) {
             int ya = y + yp;
             for (int x = 0; x < s.W; x++) {
