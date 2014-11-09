@@ -21,7 +21,7 @@ public class SpriteSheet {
     
     public static SpriteSheet backgroundSheet   = new SpriteSheet("/Textures/Background.png");
     public static SpriteSheet objectSheet       = new SpriteSheet("/Textures/GameSpheres.png");
-    public static SpriteSheet obj               = new SpriteSheet("/Textures/GameSphere.png");
+    public static SpriteSheet obj               = new SpriteSheet("/Textures/GreenSprite.png");
     /**
      * This creates an instance of a SpriteSheet, taking the path data, size in
      * pixels, and creating a storage area for the pixels until loading at the
