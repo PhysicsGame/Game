@@ -29,6 +29,7 @@ public class Game extends Canvas implements Runnable {
     private ArrayList<GameObject> normalSphere = new ArrayList<GameObject>();
     private double currentMass = 10;
     private GameObject center;
+    private GameObject goal;
     private GameSphere playerSphere;
     private boolean canStart = false;
     private Level lvl1 = new Level("No, please", screen);
@@ -51,6 +52,8 @@ public class Game extends Canvas implements Runnable {
 //        center = new GameObject(xc/mc, yc/mc, 0,0,mc,true,screen);
 //        center.setSprite(Sprite.gameObj);
         
+        goal = new GameObject(118, 5, 0, 0, 0, true, screen);
+        goal.setSprite(Sprite.goal);
         playerSphere = new GameSphere(118, 260, 0, 0, screen);
         frame.setTitle("GAME SPHERES!");
         frame.setPreferredSize(new Dimension(x * scale, y * scale));
@@ -135,8 +138,10 @@ public class Game extends Canvas implements Runnable {
                 gs.render();
             }
         }
+        
+        goal.render();
         playerSphere.render();
-
+        
 //        center.render();
 
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
@@ -187,7 +192,7 @@ public class Game extends Canvas implements Runnable {
         double[] vel = playerSphere.getVelocity();
         double mag = Math.sqrt(vel[0] * vel[0] + vel[1] * vel[1]);
 //        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-//        System.out.println("V: " + mag);
+        System.out.println("V: " + mag);
 //        System.out.println("X: " + forces[0]);
 //        System.out.println("Y: " + forces[1]);
 //        System.out.println("G: " + playerSphere.getG());

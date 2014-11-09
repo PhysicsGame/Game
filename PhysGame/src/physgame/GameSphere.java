@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class GameSphere extends GameObject
 {
-    private double G_ = .000667;
+    private double G_ = .0000667;
     private Vector2d force = new Vector2d();
     private double normalMass = 1;
     private double heading;
@@ -98,8 +98,16 @@ public class GameSphere extends GameObject
     {
         double dx, dy;
         
-        dx = getVelocity()[0] + (force.getX()/getMass())*t;
-        dy = getVelocity()[1] + (force.getY()/getMass())*t;
+        if (Math.abs(getVelocity()[0] + (force.getX()/getMass())*t) < .6) //Breaks physics by limiting velocity. Might not actually do anything...
+            dx = getVelocity()[0] + (force.getX()/getMass())*t;
+        else
+            dx = getVelocity()[0];
+        
+        if (Math.abs(getVelocity()[1] + (force.getY()/getMass())*t) < .6)
+            dy = getVelocity()[1] + (force.getY()/getMass())*t;
+        else
+            dy = getVelocity()[1];
+        
         
         heading = Math.abs(Math.atan(dy/dx));
         
