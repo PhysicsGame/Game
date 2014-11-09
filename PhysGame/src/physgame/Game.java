@@ -31,6 +31,7 @@ public class Game extends Canvas implements Runnable {
     private GameObject center;
     private GameSphere playerSphere;
     private boolean canStart = false;
+    private Level lvl1 = new Level("No, please", screen);
 
     /**
      *
@@ -129,7 +130,6 @@ public class Game extends Canvas implements Runnable {
         
         g.fillRect(0, 0, x * scale, y * scale);
         screen.renderBackground();
-        
         if (!normalSphere.isEmpty()) {
             for (GameObject gs : normalSphere) {
                 gs.render();
@@ -150,6 +150,9 @@ public class Game extends Canvas implements Runnable {
     }
     
     public void update() {
+        if(!lvl1.isWon() && normalSphere.isEmpty())
+            for(int i = 0; i < lvl1.getSpheres().length; i++)
+                normalSphere.add(lvl1.getSpheres()[i]);
         long startTime = System.currentTimeMillis();
         if (mouse.lastMouseClicked && !mouse.mouseHeld) {
             normalSphere.add(new GameObject(mouse.xPos / scale - 13, mouse.yPos / scale - 8, 0, 0, currentMass, true, screen));
@@ -201,7 +204,7 @@ public class Game extends Canvas implements Runnable {
             }
         }
         key.update();
-        
+        lvl1.update();
         
     }
 }
