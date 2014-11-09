@@ -52,4 +52,13 @@ class Screen {
             }
         }
     }
+    
+    void renderBackImage(int[] pixels, int ignoreColor){
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if(pixels[x + (y * width)] != ignoreColor)
+                    this.pixels[x + (y * width)] = pixels[x + (y * width)];
+            }
+        }
+    }
 }
