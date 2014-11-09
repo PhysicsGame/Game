@@ -1,7 +1,9 @@
 package physgame;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -136,7 +138,10 @@ public class Game extends Canvas implements Runnable {
 
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
         g.drawImage(image, 0, 0, x * scale, y * scale, this);
-        
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        g.drawString("Mass:  " + currentMass, 15, 30);
+        g.dispose();
         bs.show();
         mouse.update();
     }
