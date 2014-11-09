@@ -31,16 +31,19 @@ public class Game extends Canvas implements Runnable {
     public Game() {
         double mc=0, xc=0, yc=0;
         for (int i = 0; i < normalSphere.length; i++) {
-            normalSphere[i] = new GameObject(Math.random() * 200, Math.random() * 240, 0, 0, Math.random() * 12 + 3, true, screen);
+            double tempMass = Math.random() * 12 - 6;
+            while(tempMass == 0)
+                tempMass = Math.random() * 12 - 6;
+            normalSphere[i] = new GameObject(Math.random() * 200, Math.random() * 240, 0, 0, tempMass, true, screen);
             mc += normalSphere[i].getMass();
             xc += normalSphere[i].getPosition()[0] * normalSphere[i].getMass();
             yc += normalSphere[i].getPosition()[1] * normalSphere[i].getMass();
         }
         
         center = new GameObject(xc/mc, yc/mc, 0,0,mc,true,screen);
-        center.setSprite(Sprite.gameObj2);
+        center.setSprite(Sprite.gameObj);
         
-        playerSphere = new GameSphere(25, 50, 0, 0, screen);
+        playerSphere = new GameSphere(screen.width/2, screen.height/2, 0, 0, screen);
         frame.setTitle("GAME SPHERES!");
         frame.setPreferredSize(new Dimension(x * scale, y * scale));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -116,10 +119,10 @@ public class Game extends Canvas implements Runnable {
         g.fillRect(0, 0, x * scale, y * scale);
         screen.renderBackground();
 
-        playerSphere.render();
         for (GameObject gs : normalSphere) {
             gs.render();
         }
+        playerSphere.render();
         
         center.render();
 
@@ -146,6 +149,8 @@ public class Game extends Canvas implements Runnable {
         lastUpdate = startTime;
         
         playerSphere.update();
+        for(GameObject objs : normalSphere)
+            objs.update();
 
 
     }
