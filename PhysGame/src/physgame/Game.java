@@ -14,7 +14,8 @@ public class Game extends Canvas implements Runnable {
     private int y = 300, x = 250;
     private Screen screen = new Screen(x, y);
     private int scale = 2;
-    private Mouse mouse = new Mouse();
+    private Mouse mouse;
+    private MouseWheel scroll;
     public BufferedImage image = new BufferedImage(x, y, BufferedImage.TYPE_INT_RGB);
     private JFrame frame = new JFrame();
     private boolean running = true;
@@ -23,6 +24,7 @@ public class Game extends Canvas implements Runnable {
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private SpriteSheet ss;
     private ArrayList<GameObject> normalSphere = new ArrayList<GameObject>();
+    private double currentMass = 10;
     private GameObject center;
     private GameSphere playerSphere;
 
@@ -52,6 +54,8 @@ public class Game extends Canvas implements Runnable {
         mouse = new Mouse();
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
+        scroll = new MouseWheel();
+        addMouseWheelListener(scroll);
         frame.setResizable(false);
         frame.add(this);
         frame.pack();
@@ -140,12 +144,22 @@ public class Game extends Canvas implements Runnable {
     public void update() {
         long startTime = System.currentTimeMillis();
         
+        if (scroll.notches < 0)
+        {
+            currentMass += 1;
+            scroll.notches = 0;
+        }
+        else if (scroll.notches > 0)
+        {
+            currentMass -= 1;
+            scroll.notches = 0;
+        }
         mouse.update();
         if (mouse.lastMouseClicked) {
             System.out.println("WORK");
             System.out.println("X: " + mouse.xPos);
             System.out.println("Y: " + mouse.yPos);
-            normalSphere.add(new GameObject(mouse.xPos / scale - 13, mouse.yPos / scale - 8, 0, 0, 10, true, screen));
+            normalSphere.add(new GameObject(mouse.xPos / scale - 13, mouse.yPos / scale - 8, 0, 0, currentMass, true, screen));
         }
         
         double[] forces = playerSphere.calculateForce(normalSphere);
@@ -157,6 +171,8 @@ public class Game extends Canvas implements Runnable {
 //        System.out.println("X: " + forces[0]);
 //        System.out.println("Y: " + forces[1]);
 //        System.out.println("G: " + playerSphere.getG());
+//        System.out.println(scroll.notches);
+        System.out.println(currentMass);
         playerSphere.updatePosition(startTime - lastUpdate);
         playerSphere.updateVelocity(startTime - lastUpdate);
         lastUpdate = startTime;
