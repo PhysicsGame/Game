@@ -6,15 +6,15 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import javax.swing.JFrame;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable {
-
+    
     private int y = 300, x = 250;
     private Screen screen = new Screen(x, y);
     private int scale = 2;
-    private Mouse mouse;
+    private Mouse mouse = new Mouse();
     public BufferedImage image = new BufferedImage(x, y, BufferedImage.TYPE_INT_RGB);
     private JFrame frame = new JFrame();
     private boolean running = true;
@@ -48,16 +48,17 @@ public class Game extends Canvas implements Runnable {
         frame.setTitle("GAME SPHERES!");
         frame.setPreferredSize(new Dimension(x * scale, y * scale));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         mouse = new Mouse();
-
-        frame.addMouseListener(mouse);
+        addMouseListener(mouse);
+        addMouseMotionListener(mouse);
         frame.setResizable(false);
         frame.add(this);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-
+    
     @Override
     public void run() {
         long time = System.nanoTime();
@@ -66,7 +67,7 @@ public class Game extends Canvas implements Runnable {
         double delta = 0;
         int frames = 0;
         requestFocus();
-
+        
         while (running) {
             long now = System.nanoTime();
             delta += (now - time) / ns;
@@ -77,7 +78,7 @@ public class Game extends Canvas implements Runnable {
             }
             render();
             frames++;
-
+            
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
                 frames = 0;
@@ -107,7 +108,7 @@ public class Game extends Canvas implements Runnable {
         }
         System.exit(3);
     }
-
+    
     public void render() {
         BufferStrategy bs = getBufferStrategy();
         if (bs == null) {
@@ -116,30 +117,39 @@ public class Game extends Canvas implements Runnable {
         }
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         screen.clear();
-
+        
         g.fillRect(0, 0, x * scale, y * scale);
         screen.renderBackground();
-
-//        for (GameObject gs : normalSphere) {
-//            gs.render();
-//        }
-        playerSphere.render();
         
+        if (!normalSphere.isEmpty()) {
+            for (GameObject gs : normalSphere) {
+                gs.render();
+            }
+        }
+        playerSphere.render();
+
 //        center.render();
 
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
         g.drawImage(image, 0, 0, x * scale, y * scale, this);
-
+        
         bs.show();
-
+        
     }
-
+    
     public void update() {
         long startTime = System.currentTimeMillis();
-        if (!normalSphere.isEmpty())
-        {
+        
+        mouse.update();
+        if (mouse.lastMouseClicked) {
+            System.out.println("WORK");
+            System.out.println("X: " + mouse.xPos);
+            System.out.println("Y: " + mouse.yPos);
+            normalSphere.add(new GameObject(mouse.xPos / scale - 13, mouse.yPos / scale - 8, 0, 0, 10, true, screen));
+        }
+        
         double[] forces = playerSphere.calculateForce(normalSphere);
-
+        
         double[] vel = playerSphere.getVelocity();
         double mag = Math.sqrt(vel[0] * vel[0] + vel[1] * vel[1]);
 //        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -152,10 +162,12 @@ public class Game extends Canvas implements Runnable {
         lastUpdate = startTime;
         
         playerSphere.update();
-        for(GameObject objs : normalSphere)
-            objs.update();
+        if (!normalSphere.isEmpty()) {
+            for (GameObject objs : normalSphere) {
+                objs.update();
+            }
         }
-
-
+        
+        
     }
 }
