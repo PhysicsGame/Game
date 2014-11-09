@@ -138,7 +138,13 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(image, 0, 0, x * scale, y * scale, this);
         
         bs.show();
-        
+        mouse.update();
+        if (mouse.lastMouseClicked || mouse.mouseClicked) {
+            System.out.println("WORK");
+            System.out.println("X: " + mouse.xPos);
+            System.out.println("Y: " + mouse.yPos);
+            normalSphere.add(new GameObject(mouse.xPos / scale - 13, mouse.yPos / scale - 8, 0, 0, currentMass, true, screen));
+        }
     }
     
     public void update() {
@@ -164,13 +170,7 @@ public class Game extends Canvas implements Runnable {
             }
                 scroll.notches = 0;
         }
-        mouse.update();
-        if (mouse.lastMouseClicked) {
-            System.out.println("WORK");
-            System.out.println("X: " + mouse.xPos);
-            System.out.println("Y: " + mouse.yPos);
-            normalSphere.add(new GameObject(mouse.xPos / scale - 13, mouse.yPos / scale - 8, 0, 0, currentMass, true, screen));
-        }
+        
         
         double[] forces = playerSphere.calculateForce(normalSphere);
         
