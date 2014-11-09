@@ -6,6 +6,7 @@ public class Sprite {
     public static Sprite pushObj    = new Sprite(26, 16, 0, 0, SpriteSheet.objectSheet, 6);
     public static Sprite pullObj    = new Sprite(26, 16, 0, 1, SpriteSheet.objectSheet, 6);
     public static Sprite gameObj    = new Sprite(12, 16, 0, 0,  SpriteSheet.obj, 7);
+    public static Sprite goal       = new Sprite(16, 16, 0, 0, SpriteSheet.goal, 1);
     
     private int updateTime = 0;
     public final int W, H;
