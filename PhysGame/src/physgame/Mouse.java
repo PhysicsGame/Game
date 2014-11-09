@@ -21,7 +21,6 @@ public class Mouse extends MouseAdapter implements MouseListener, MouseMotionLis
     public void update()  {
         lastMouseClicked = mouseClicked;
         lastMouseHeld = mouseHeld;
-        mouseClicked = false;
     }
     
     /**
@@ -39,7 +38,7 @@ public class Mouse extends MouseAdapter implements MouseListener, MouseMotionLis
      */
     public void mousePressed(MouseEvent e) {
         mouseHeld = true;
-        mouseClicked = false;
+        mouseClicked = true;
     }
 
     /**
@@ -56,7 +55,6 @@ public class Mouse extends MouseAdapter implements MouseListener, MouseMotionLis
      */
     public void mouseDragged(MouseEvent e) {
         mouseHeld = true;
-        mouseClicked = false;
         updatePos(e);
     }
     
@@ -80,12 +78,10 @@ public class Mouse extends MouseAdapter implements MouseListener, MouseMotionLis
     }
     
     public void mouseEntered(MouseEvent e) {
-        mouseClicked = false;
         mouseHeld = false;
     }
 
     public void mouseExited(MouseEvent e) {
-        mouseClicked = false;
         mouseHeld = false;
     }
 }

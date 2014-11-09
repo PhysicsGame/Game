@@ -139,16 +139,14 @@ public class Game extends Canvas implements Runnable {
         
         bs.show();
         mouse.update();
-        if (mouse.lastMouseClicked || mouse.mouseClicked) {
-            System.out.println("WORK");
-            System.out.println("X: " + mouse.xPos);
-            System.out.println("Y: " + mouse.yPos);
-            normalSphere.add(new GameObject(mouse.xPos / scale - 13, mouse.yPos / scale - 8, 0, 0, currentMass, true, screen));
-        }
     }
     
     public void update() {
         long startTime = System.currentTimeMillis();
+        if (mouse.lastMouseClicked && !mouse.mouseHeld) {
+            normalSphere.add(new GameObject(mouse.xPos / scale - 13, mouse.yPos / scale - 8, 0, 0, currentMass, true, screen));
+            mouse.lastMouseClicked = false;
+        }
         
         if (scroll.notches < 0)
         {
