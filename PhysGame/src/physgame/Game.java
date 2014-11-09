@@ -128,6 +128,7 @@ public class Game extends Canvas implements Runnable{
         System.out.println("V: " + mag);
         System.out.println("X: " +forces[0]);
         System.out.println("Y: " + forces[1]);
+        System.out.println("G: " + playerSphere.getG());
         playerSphere.updatePosition(startTime - lastUpdate);
         playerSphere.updateVelocity(startTime - lastUpdate);
         lastUpdate = startTime;

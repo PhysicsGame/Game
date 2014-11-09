@@ -25,12 +25,12 @@ public class GameSphere extends GameObject
         double distanceY;
         for (GameObject g : spheres)
                 {
-                    distanceX = g.getPosition()[0]-this.getPosition()[0];
-                    distanceY = g.getPosition()[1]-this.getPosition()[1];
+                    distanceX = Math.abs(g.getPosition()[0]-this.getPosition()[0]);
+                    distanceY = Math.abs(g.getPosition()[1]-this.getPosition()[1]);
                     
-                    if (distanceX > 1000 || distanceY > 1000)
-                        G_ += .0001;
-                    else if (distanceX < 1000 && distanceY < 1000)
+                    if (distanceX > 300 || distanceY > 300)
+                        G_ += 1;
+                    else if (distanceX < 300 && distanceY < 300)
                         G_ = .000667;
                     
                     forcesPrelim[0] = Math.abs(((G_* g.getMass() * this.getMass())/(Math.pow(distanceX, 2) + Math.pow(distanceY, 2))) * Math.cos(Math.atan(distanceY/distanceX)));
@@ -122,5 +122,10 @@ public class GameSphere extends GameObject
     Vector2d getForce()
     {
         return force;
+    }
+    
+    double getG()
+    {
+        return G_;
     }
 }
