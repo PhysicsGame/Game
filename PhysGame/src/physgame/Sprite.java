@@ -3,7 +3,7 @@ package physgame;
 public class Sprite {
     
     public static Sprite background = new Sprite(250, 300, 0, 0, SpriteSheet.backgroundSheet, 1);
-    public static Sprite gameObj    = new Sprite( 32, 0, 0, SpriteSheet.objectSheet, 1);
+    public static Sprite gameObj    = new Sprite(16, 0, 0, SpriteSheet.objectSheet, 1);
     
     
     public final int W, H;
