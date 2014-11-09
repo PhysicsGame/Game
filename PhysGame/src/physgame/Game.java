@@ -141,6 +141,7 @@ public class Game extends Canvas implements Runnable {
         
         goal.render();
         playerSphere.render();
+        lvl1.render();
         
 //        center.render();
 
@@ -155,7 +156,7 @@ public class Game extends Canvas implements Runnable {
     }
     
     public void update() {
-        if(!lvl1.isWon() && normalSphere.isEmpty())
+        if(!lvl1.isWon(playerSphere, goal) && normalSphere.isEmpty())
             for(int i = 0; i < lvl1.getSpheres().length; i++)
                 normalSphere.add(lvl1.getSpheres()[i]);
         long startTime = System.currentTimeMillis();
@@ -210,6 +211,9 @@ public class Game extends Canvas implements Runnable {
         }
         key.update();
         lvl1.update();
+        
+        if (lvl1.isWon(playerSphere, goal))
+            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         
     }
 }
