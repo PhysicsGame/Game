@@ -2,7 +2,7 @@ package physgame;
 
 public class GameSphere extends GameObject
 {
-    private double G_ = .00667;
+    private double G_ = .000667;
     private Vector2d force = new Vector2d();
     private double normalMass = 1;
     private double heading;
@@ -27,6 +27,12 @@ public class GameSphere extends GameObject
                 {
                     distanceX = g.getPosition()[0]-this.getPosition()[0];
                     distanceY = g.getPosition()[1]-this.getPosition()[1];
+                    
+                    if (distanceX > 1000 || distanceY > 1000)
+                        G_ += .0001;
+                    else if (distanceX < 1000 && distanceY < 1000)
+                        G_ = .000667;
+                    
                     forcesPrelim[0] = Math.abs(((G_* g.getMass() * this.getMass())/(Math.pow(distanceX, 2) + Math.pow(distanceY, 2))) * Math.cos(Math.atan(distanceY/distanceX)));
                     forcesPrelim[1] = Math.abs(((G_* g.getMass() * this.getMass())/(Math.pow(distanceX, 2) + Math.pow(distanceY, 2))) * Math.sin(Math.atan(distanceY/distanceX)));
                     
