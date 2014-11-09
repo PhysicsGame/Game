@@ -17,6 +17,7 @@ public class Game extends Canvas implements Runnable {
     private Screen screen = new Screen(x, y);
     private int scale = 2;
     private Mouse mouse;
+    private Keyboard key;
     private MouseWheel scroll;
     public BufferedImage image = new BufferedImage(x, y, BufferedImage.TYPE_INT_RGB);
     private JFrame frame = new JFrame();
@@ -29,6 +30,7 @@ public class Game extends Canvas implements Runnable {
     private double currentMass = 10;
     private GameObject center;
     private GameSphere playerSphere;
+    private boolean canStart = false;
 
     /**
      *
@@ -52,12 +54,13 @@ public class Game extends Canvas implements Runnable {
         frame.setTitle("GAME SPHERES!");
         frame.setPreferredSize(new Dimension(x * scale, y * scale));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        key = new Keyboard();
         mouse = new Mouse();
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
         scroll = new MouseWheel();
         addMouseWheelListener(scroll);
+        addKeyListener(key);
         frame.setResizable(false);
         frame.add(this);
         frame.pack();
@@ -152,17 +155,17 @@ public class Game extends Canvas implements Runnable {
             normalSphere.add(new GameObject(mouse.xPos / scale - 13, mouse.yPos / scale - 8, 0, 0, currentMass, true, screen));
             mouse.lastMouseClicked = false;
         }
-        
-        if (scroll.notches < 0)
-        {
-            if (currentMass < 40)
+       
+            if (scroll.notches < 0)
             {
-                currentMass += 1;
-                if (currentMass == 0)
-                    currentMass = 1;
-            }
-            scroll.notches = 0;
-        }
+                if (currentMass < 40)
+                {
+                    currentMass += 1;
+                    if (currentMass == 0)
+                        currentMass = 1;
+                }
+                scroll.notches = 0;
+           }
         else if (scroll.notches > 0)
         {
             if (currentMass > -40)
@@ -172,9 +175,10 @@ public class Game extends Canvas implements Runnable {
                     currentMass = -1;
             }
                 scroll.notches = 0;
-        }
+        } if(key.space)
+            canStart = true;
         
-        
+        if(canStart){
         double[] forces = playerSphere.calculateForce(normalSphere);
         
         double[] vel = playerSphere.getVelocity();
@@ -189,13 +193,14 @@ public class Game extends Canvas implements Runnable {
         playerSphere.updatePosition(startTime - lastUpdate);
         playerSphere.updateVelocity(startTime - lastUpdate);
         lastUpdate = startTime;
-        
+        }
         playerSphere.update();
         if (!normalSphere.isEmpty()) {
             for (GameObject objs : normalSphere) {
                 objs.update();
             }
         }
+        key.update();
         
         
     }
