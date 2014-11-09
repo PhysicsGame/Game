@@ -103,4 +103,9 @@ public class GameSphere extends GameObject
         setPosition(x, y);
     }
     
+    Vector2d getForce()
+    {
+        return force;
+    }
+    
 }
