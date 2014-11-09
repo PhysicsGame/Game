@@ -212,8 +212,6 @@ public class Game extends Canvas implements Runnable {
         key.update();
         lvl1.update();
         
-        if (lvl1.isWon(playerSphere, goal))
-            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         
     }
 }

@@ -44,11 +44,21 @@ class Level {
             objs[i].update();
     }
     
-    public boolean isWon(){
+    public boolean isWon(GameSphere player, GameObject g){
         /*
          * checks to see if obj is within bounds of the goal. If they are, returns
          * true, otherwise returns false?
          */
+        
+        for (int x = 118; x < 134; x++)
+        {
+            for (int y = 5; y < 21; y++)
+            {
+                if ((int)player.getPosition()[0] == x && (int)player.getPosition()[1] == y)
+                    isWon = true;
+            }
+        }
+        
         
         return isWon;
     }
