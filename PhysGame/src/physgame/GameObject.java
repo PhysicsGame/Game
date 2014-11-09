@@ -28,8 +28,8 @@ public class GameObject
         pos = new Vector2d(x,y);
         vel = new Vector2d(dx,dy);
         mass = m;
-        if(mass > 0) sprite = Sprite.pullObj;
-        if(mass < 0) sprite = Sprite.pushObj;
+        if(mass < 0) sprite = Sprite.pullObj;
+        if(mass > 0) sprite = Sprite.pushObj;
         if (active)
         {
             isPassive = false;
