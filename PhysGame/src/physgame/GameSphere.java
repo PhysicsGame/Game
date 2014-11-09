@@ -1,5 +1,7 @@
 package physgame;
 
+import java.util.ArrayList;
+
 public class GameSphere extends GameObject
 {
     private double G_ = .000667;
@@ -19,7 +21,7 @@ public class GameSphere extends GameObject
         sprite = Sprite.gameObj;
     }
     
-    double[] calculateForce(GameObject[] spheres)
+    double[] calculateForce(ArrayList<GameObject> spheres)
     {
         double[] forcesPrelim = {0,0};
         double[] forcesFinal = {0,0};
