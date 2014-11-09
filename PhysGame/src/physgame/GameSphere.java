@@ -119,6 +119,21 @@ public class GameSphere extends GameObject
         setPosition(x, y);
     }
     
+    public void update(){
+        if(getPosition()[0] < 0 && getVelocity()[0] < 0){
+            vel.setX(-vel.getX() * .8);
+        }
+        if(getPosition()[0] + sprite.W > screen.width && getVelocity()[0] > 0){
+            vel.setX(-vel.getX() * .8);
+        }
+        if(getPosition()[1] < 0 && getVelocity()[1] < 0){
+            vel.setY(-vel.getY() * .8);
+        }
+        if(getPosition()[1] + sprite.H + 14 > screen.height && getVelocity()[1] > 0){
+            vel.setY(-vel.getY() * .8);
+        }
+    }
+    
     Vector2d getForce()
     {
         return force;

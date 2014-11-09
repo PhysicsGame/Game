@@ -41,7 +41,7 @@ class Screen {
             int ya = y + yp;
             for (int x = 0; x < s.W; x++) {
                 int xa = x + xp;
-                if (xa < 0 || xa >= width || ya < 0 || ya >= height) {
+                if (xa < 0 - s.W || xa >= width || ya < 0 || ya >= height) {
                     break;
                 }
                 if (xa < 0) {

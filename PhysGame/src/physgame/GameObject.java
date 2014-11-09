@@ -5,12 +5,12 @@ package physgame;
 public class GameObject 
 {
     private Vector2d pos;
-    private Vector2d vel;
+    protected Vector2d vel;
     private double mass;
     private boolean isAttractive;
     private boolean isPassive;
-    private Sprite sprite = Sprite.gameObj;
-    private Screen screen;
+    protected Sprite sprite = Sprite.gameObj;
+    protected Screen screen;
     
     GameObject(Screen s)
     {
@@ -96,4 +96,7 @@ public class GameObject
         screen.renderGameObj((int)pos.getX(),(int)pos.getY(), sprite.W/2, sprite);
     }
     
+    public void setSprite(Sprite s){
+        sprite = s;
+    }
 }

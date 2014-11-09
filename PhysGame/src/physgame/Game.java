@@ -8,10 +8,10 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
-public class Game extends Canvas implements Runnable{
-    
+public class Game extends Canvas implements Runnable {
+
     private int y = 300, x = 250;
-    private Screen screen = new Screen(x,y);
+    private Screen screen = new Screen(x, y);
     private int scale = 2;
     private Mouse mouse;
     public BufferedImage image = new BufferedImage(x, y, BufferedImage.TYPE_INT_RGB);
@@ -21,21 +21,31 @@ public class Game extends Canvas implements Runnable{
     private long lastUpdate = System.currentTimeMillis();
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private SpriteSheet ss;
-    private GameObject[] normalSphere = new GameObject[10];
+    private GameObject[] normalSphere = new GameObject[15];
+    private GameObject center;
     private GameSphere playerSphere;
-    
+
     /**
      *
      */
-    public Game(){
-        for(int i = 0; i < normalSphere.length; i++)
+    public Game() {
+        double mc=0, xc=0, yc=0;
+        for (int i = 0; i < normalSphere.length; i++) {
             normalSphere[i] = new GameObject(Math.random() * 200, Math.random() * 240, 0, 0, Math.random() * 12 + 3, true, screen);
+            mc += normalSphere[i].getMass();
+            xc += normalSphere[i].getPosition()[0] * normalSphere[i].getMass();
+            yc += normalSphere[i].getPosition()[1] * normalSphere[i].getMass();
+        }
+        
+        center = new GameObject(xc/mc, yc/mc, 0,0,mc,true,screen);
+        center.setSprite(Sprite.gameObj2);
+        
         playerSphere = new GameSphere(25, 50, 0, 0, screen);
-        frame.setTitle("GAME SPHERES!");        
-        frame.setPreferredSize(new Dimension(x*scale,y*scale));
+        frame.setTitle("GAME SPHERES!");
+        frame.setPreferredSize(new Dimension(x * scale, y * scale));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mouse = new Mouse();
-        
+
         frame.addMouseListener(mouse);
         frame.setResizable(false);
         frame.add(this);
@@ -71,7 +81,7 @@ public class Game extends Canvas implements Runnable{
         }
         stop();
     }
-    
+
     /**
      * Start the thread.
      */
@@ -93,46 +103,50 @@ public class Game extends Canvas implements Runnable{
         }
         System.exit(3);
     }
-    
-    
-    public void render(){
+
+    public void render() {
         BufferStrategy bs = getBufferStrategy();
-        if(bs == null){
+        if (bs == null) {
             createBufferStrategy(3);
             return;
         }
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         screen.clear();
-        
-        g.fillRect(0, 0, x*scale, y*scale);
+
+        g.fillRect(0, 0, x * scale, y * scale);
         screen.renderBackground();
-        
+
         playerSphere.render();
-        for(GameObject gs : normalSphere)
+        for (GameObject gs : normalSphere) {
             gs.render();
+        }
         
+        center.render();
+
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
-        g.drawImage(image, 0,0, x * scale, y * scale, this);
-        
+        g.drawImage(image, 0, 0, x * scale, y * scale, this);
+
         bs.show();
-    
+
     }
-    
-    public void update(){
+
+    public void update() {
         long startTime = System.currentTimeMillis();
         double[] forces = playerSphere.calculateForce(normalSphere);
-        
+
         double[] vel = playerSphere.getVelocity();
         double mag = Math.sqrt(vel[0] * vel[0] + vel[1] * vel[1]);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("V: " + mag);
-        System.out.println("X: " +forces[0]);
+        System.out.println("X: " + forces[0]);
         System.out.println("Y: " + forces[1]);
         System.out.println("G: " + playerSphere.getG());
         playerSphere.updatePosition(startTime - lastUpdate);
         playerSphere.updateVelocity(startTime - lastUpdate);
         lastUpdate = startTime;
         
-        
+        playerSphere.update();
+
+
     }
 }
