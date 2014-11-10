@@ -32,6 +32,7 @@ public class Game extends Canvas implements Runnable {
     private GameSphere playerSphere;
     private boolean canStart = false;
     private Level lvl1;
+    private int NumOfSpheres = 0;
 
     /**
      *
@@ -148,11 +149,13 @@ public class Game extends Canvas implements Runnable {
             for(int i = 0; i < lvl1.getSpheres().length; i++)
                 normalSphere.add(lvl1.getSpheres()[i]);
         long startTime = System.currentTimeMillis();
-        if (mouse.lastMouseClicked && !mouse.mouseHeld) {
+        if (NumOfSpheres < 15){
+            if (mouse.lastMouseClicked && !mouse.mouseHeld) {
             normalSphere.add(new GameObject(mouse.xPos / scale - 13, mouse.yPos / scale - 8, 0, 0, currentMass, true, screen));
             mouse.lastMouseClicked = false;
+            NumOfSpheres += 1;
+            }
         }
-       
             if (scroll.notches < 0)
             {
                 if (currentMass < 40)
